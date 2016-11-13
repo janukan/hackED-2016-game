@@ -22,7 +22,7 @@ class World:
         self.bridges = []
 
         self.agents = []
-        self.iter = 0
+
         self.initialState()
 
     def initialState(self):
@@ -50,9 +50,8 @@ class World:
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 return False
-        self.iter+=1
-        if self.iter%40==0:
-            self.rset3(self.board)
+
+        self.randomWorld()
 
         return True
 
@@ -89,49 +88,51 @@ class World:
 
     def displayGrid(self):
         for row in self.board:
-               print(row)
-    def rset3(self,grid):
-        gridData=self.vNeighbourLooped(grid,'-','*')
-        for r in range(len(gridData)):
-            for  c in range(40):
-                if gridData[r][c] < 1:
-                    grid[r][c] = '*'
-                elif gridData[r][c] < 4:
-                    grid[r][c] = '-'
-                elif gridData[r][c] < 6:
-                    grid[r][c] = '*'
-                else:
-                    grid[r][c] == grid[r][c]
-    def vNeighbourLooped(self,grid,t_value,f_value):
-        newGrid = [[f_value for tile in range(len(grid[0]))] for group in range(len(grid))]
-        for x in range(len(grid)):
-            for y in range(len(grid[0])):
-                neighbours = 0
-                if grid[(x-1)%len(grid)][(y+1)%len(grid[x])] == t_value:
-                    neighbours+=1
-                if grid[x][(y+1)%len(grid[x])] == t_value:
-                    neighbours+=1
-                if grid[(x+1)%len(grid)][(y+1)%len(grid[x])] == t_value:
-                    neighbours+=1
+           	print(row)
+	def rset3(grid):
+		gridData=vNeighbourLooped(grid,'-','*')
+		for r in range(len(gridData)):
+			for  c in range(40):
+				if gridData[r][c] < 2:
+					grid[r][c] = '*'
+				elif gridData[r][c] < 4:
+					grid[r][c] = '-'
+				elif gridData[r][c] < 6:
+					grid[r][c] = '*"
+				else:
+					grid[r][c] == grid[r][c]
+
+
+	def vNeighbourLooped(grid,t_value,f_value):
+		newGrid = [[f_value for tile in range(len(grid[0]))] for group in range(len(grid))]
+		for x in range(len(grid)):
+			for y in range(len(grid[0])):
+				neighbours = 0
+				if grid[(x-1)%len(grid)][(y+1)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[x][(y+1)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[(x+1)%len(grid)][(y+1)%len(grid[x])] == t_value:
+					neighbours+=1
 			
-                if grid[(x-1)%len(grid)][y] == t_value:
-                    neighbours+=1
-                if grid[(x+1)%len(grid)][y] == t_value:
-                    neighbours+=1
+				if grid[(x-1)%len(grid)][y] == t_value:
+					neighbours+=1
+				if grid[(x+1)%len(grid)][y] == t_value:
+					neighbours+=1
 				
-                if grid[(x-1)%len(grid)][(y-1)%len(grid[x])] == t_value:
-                    neighbours+=1
-                if grid[x][(y-1)%len(grid[x])] == t_value:
-                    neighbours+=1
-                if grid[(x+1)%len(grid)][(y-1)%len(grid[x])] == t_value:
-                    neighbours+=1
-                #if grid[x][(y+2)%len(grid[x])] == t_value:
-                #    neighbours+=1
-                #if grid[x][(y-2)%len(grid[x])] == t_value:
-                #    neighbours+=1
-                #if grid[(x+2)%len(grid)][y] == t_value:
-                #    neighbours+=1
-                #if grid[(x-2)%len(grid)][y] == t_value:
-                #    neighbours+=1
-                newGrid[x][y] = neighbours
-        return newGrid
+				if grid[(x-1)%len(grid)][(y-1)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[x][(y-1)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[(x+1)%len(grid)][(y-1)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[x][(y+2)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[x][(y-2)%len(grid[x])] == t_value:
+					neighbours+=1
+				if grid[(x+2)%len(grid)][y] == t_value:
+					neighbours+=1
+				if grid[(x-2)%len(grid)][y] == t_value:
+					neighbours+=1
+				newGrid[x][y] = neighbours
+		return newGrid	
